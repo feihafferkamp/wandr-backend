@@ -7,7 +7,7 @@
   hometown = Faker::Address.city
   username = Faker::Twitter.screen_name
   password = Faker::Music.instrument
-  User.create(firstname: firstname, lastname: lastname, email: email, dob: dob, hometown: hometown, username: username, password_digest: password)
+  User.create(firstname: firstname, lastname: lastname, email: email, dob: dob, hometown: hometown, username: username, password: password)
 end
 
 # trips

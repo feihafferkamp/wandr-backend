@@ -1,3 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :users, except: [:new, :edit, :destroy]
+  resources :trips, except: [:new, :edit]
+  resources :destinations, except: [:new, :edit, :destroy]
+  resources :tags, only: [:index, :show]
+  resources :auth, only: [:create]
+
+  post '/signup', to: "users#create"
+  post '/login', to: "auth#create"
+  get 'get_user', to: "auth#show"
 end
