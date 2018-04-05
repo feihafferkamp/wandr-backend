@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
 
   create_table "activities", force: :cascade do |t|
     t.string "title"
@@ -55,7 +56,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "name"
+    t.citext "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -102,7 +103,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
     t.datetime "dob"
     t.string "photo", default: ""
     t.string "hometown"
-    t.string "username"
+    t.citext "username"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
