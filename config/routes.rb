@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  resources :users, except: [:new, :edit, :destroy]
+  resources :users, except: [:new, :edit]
   resources :trips, except: [:new, :edit]
   resources :destinations, except: [:new, :edit, :destroy]
-  resources :tags, only: [:index, :show]
-  resources :auth, only: [:create]
+  resources :tags, except: [:new, :edit, :destroy]
 
   post '/signup', to: "users#create"
   post '/login', to: "auth#create"

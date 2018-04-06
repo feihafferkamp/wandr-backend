@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::API
-  # before_action :authorized
-
   def issue_token(payload)
     JWT.encode(payload, ENV['jwt_secret'])
   end
@@ -18,8 +16,5 @@ class ApplicationController < ActionController::API
     request.headers["Authorization"]
   end
 
-  # def authorized
-  #   render json: {message: "You're not logged in." } unless logged_in?
-  # end
 
 end

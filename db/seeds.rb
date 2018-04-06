@@ -39,7 +39,7 @@ end
 
 # activities
 Trip.all.each do |trip|
-  title = Faker::Coffee.blend_name
+  name = Faker::Coffee.blend_name
   description = Faker::Coffee.notes #=> "balanced, silky, marzipan, orange-creamsicle, bergamot"
   cost = Faker::Number.decimal(2)
   start_time = trip.user_trips.first.start_date
@@ -47,5 +47,5 @@ Trip.all.each do |trip|
   lat = Faker::Address.latitude
   lng = Faker::Address.longitude
   destination = Destination.all.sample
-  Activity.create(title: title, description: description, cost: cost, start_time: start_time, end_time: end_time, lat: lat, lng: lng,trip_id: trip.id, destination_id: destination.id)
+  Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, lat: lat, lng: lng,trip_id: trip.id, destination_id: destination.id)
 end

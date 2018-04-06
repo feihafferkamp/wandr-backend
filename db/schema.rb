@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
   enable_extension "citext"
 
   create_table "activities", force: :cascade do |t|
-    t.string "title"
+    t.string "name"
     t.text "description"
     t.decimal "cost", precision: 8, scale: 2, default: "0.0"
     t.datetime "start_time"
