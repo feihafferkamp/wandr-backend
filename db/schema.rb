@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 20180404202139) do
   create_table "user_trips", force: :cascade do |t|
     t.integer "ratings"
     t.integer "travel_age"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date "start_date"
+    t.date "end_date"
     t.integer "user_id"
     t.integer "trip_id"
     t.datetime "created_at", null: false
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
     t.string "firstname"
     t.string "lastname"
     t.string "email"
-    t.datetime "dob"
+    t.date "dob"
     t.string "photo", default: ""
     t.string "hometown"
     t.citext "username"
