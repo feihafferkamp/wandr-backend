@@ -1,6 +1,6 @@
 class ActivitySerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :cost, :start_time, :end_time, :lat, :lng, :img
+  attributes :id, :trip_id, :destination_id, :name, :description, :cost, :start_time, :end_time, :lat, :lng, :img
 
-  has_one :trip
-  has_one :destination
+  belongs_to :trip
+  belongs_to :destination
 end
