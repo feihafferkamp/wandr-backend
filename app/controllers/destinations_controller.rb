@@ -13,8 +13,7 @@ class DestinationsController < ApplicationController
   def create
     @destination = Destination.new(destination_params)
     if @destination.save
-      token = issue_token({destination_id: @destination.id})
-      render json: {destination: DestinationSerializer.new(@destination), jwt: token}
+      render json: DestinationSerializer.new(@destination)
     else
       render json: {errors: @destination.errors.full_messages}, status: 422
     end

@@ -11,10 +11,10 @@ class TripsController < ApplicationController
   end
 
   def create
+    byebug
     @trip = Trip.new(trip_params)
     if @trip.save
-      token = issue_token({trip_id: @trip.id})
-      render json: {trip: TripSerializer.new(@trip), jwt: token}
+      render json: TripSerializer.new(@trip)
     else
       render json: {errors: @trip.errors.full_messages}, status: 422
     end

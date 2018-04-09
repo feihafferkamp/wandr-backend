@@ -15,7 +15,7 @@ end
   name = Faker::Hipster.word
   description = Faker::Hipster.paragraph
   duration = Faker::Number.between(1, 10)
-  Trip.create(name: name, description: description, duration: duration.day)
+  Trip.create(name: name, description: description, duration: duration)
 end
 
 # user_trips
@@ -49,3 +49,9 @@ Trip.all.each do |trip|
   destination = Destination.all.sample
   Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, lat: lat, lng: lng,trip_id: trip.id, destination_id: destination.id)
 end
+
+# fei's account
+fei = User.new(firstname: 'Fei', lastname: 'Hafferkamp', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Omaha', username: 'fei', password: '123')
+fei.trips << Trip.all.first
+fei.trips << Trip.all.last
+fei.save

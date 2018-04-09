@@ -13,8 +13,7 @@ class ActivitiesController < ApplicationController
   def create
     @activity = Activity.new(activity_params)
     if @activity.save
-      token = issue_token({activity_id: @activity.id})
-      render json: {activity: ActivitySerializer.new(@activity), jwt: token}
+      render json: ActivitySerializer.new(@activity)
     else
       render json: {errors: @activity.errors.full_messages}, status: 422
     end
