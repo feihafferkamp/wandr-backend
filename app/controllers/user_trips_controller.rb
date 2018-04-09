@@ -7,8 +7,11 @@ class UserTripsController < ApplicationController
 
   def create
     @trip = Trip.find_or_create_by(trip_params)
-    @user_trip = UserTrip.find_or_create_by(user_id: user_in_session.id, trip_id: @trip.id)
-    render json: @user_trip
+    @user_trip = UserTrip.new(user_trip_params)
+    @user_trip.user_id = user_in_session.id
+    @user_trip.trip_id = @trip.id
+    @user_trip.save
+    render json: {trip: @trip, user_trip: @user_trip}
   end
 
   def update

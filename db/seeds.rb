@@ -52,6 +52,9 @@ end
 
 # fei's account
 fei = User.new(firstname: 'Fei', lastname: 'Hafferkamp', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Omaha', username: 'fei', password: '123')
-fei.trips << Trip.all.first
-fei.trips << Trip.all.last
 fei.save
+2.times do
+  trip = Trip.all.sample
+  start_date = Faker::Date.forward(90)
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - fei.dob.year, user_id: fei.id, trip_id: trip.id)
+end
