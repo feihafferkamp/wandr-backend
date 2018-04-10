@@ -44,7 +44,7 @@ Trip.all.each do |trip|
   cost = Faker::Number.decimal(2)
   start_time = trip.user_trips.first.start_date
   end_time = start_time + 2.hour
-  address = Faker::Address.street_address
+  address = Faker::Address.street_address + ', ' + Faker::Address.city + ', ' + Faker::Address.state_abbr + ' ' + Faker::Address.zip
   lat = Faker::Address.latitude
   lng = Faker::Address.longitude
   destination = Destination.all.sample
