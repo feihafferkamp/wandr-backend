@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
     t.decimal "cost", precision: 8, scale: 2, default: "0.0"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.string "address"
     t.decimal "lat", precision: 10, scale: 6
     t.decimal "lng", precision: 10, scale: 6
     t.string "img", default: ""
@@ -86,7 +87,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
   end
 
   create_table "user_trips", force: :cascade do |t|
-    t.integer "ratings"
+    t.integer "ratings", default: 0
     t.integer "travel_age"
     t.date "start_date"
     t.date "end_date"
