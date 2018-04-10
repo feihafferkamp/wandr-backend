@@ -8,7 +8,7 @@ class UserTripsController < ApplicationController
 
   def show
     @trip = Trip.find(@user_trip.trip_id)
-    render json: {trip: @trip, user_trip: @user_trip}
+    render json: {trip: TripSerializer.new(@trip), user_trip: UserTripSerializer.new(@user_trip)}
   end
 
   def create
@@ -17,13 +17,13 @@ class UserTripsController < ApplicationController
     @user_trip.user_id = user_in_session.id
     @user_trip.trip_id = @trip.id
     @user_trip.save
-    render json: {trip: @trip, user_trip: @user_trip}
+    render json: {trip: TripSerializer.new(@trip), user_trip: UserTripSerializer.new(@user_trip)}
   end
 
   def update
     @trip = Trip.find(@user_trip.trip_id)
     if @user_trip.update(user_trip_params) && @trip.update(trip_params)
-      render json: {trip: @trip, user_trip: @user_trip}
+      render json: {trip: TripSerializer.new(@trip), user_trip: UserTripSerializer.new(@user_trip)}
     else
       render json: {error: @user_trip.errors.messages + ' & ' + @trip.errors.mesasges}
     end

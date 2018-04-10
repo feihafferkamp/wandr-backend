@@ -5,10 +5,10 @@ class UsersController < ApplicationController
     @users = User.all
     render json: @users
   end
-  
+
   def show
     @user = User.find_by(id: params[:id])
-    render json: @user
+    render json: UserSerializer.new(@user)
   end
 
   def create
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(params[:user])
-      render json:@user
+      render json: UserSerializer.new(@user)
     else
       render json: {error: @user.errors.full_messages}, status: 422
     end

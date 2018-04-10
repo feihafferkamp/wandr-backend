@@ -7,11 +7,10 @@ class TripsController < ApplicationController
   end
 
   def show
-    render json: @trip
+    render json: TripSerializer.new(@trip)
   end
 
   def create
-    byebug
     @trip = Trip.new(trip_params)
     if @trip.save
       render json: TripSerializer.new(@trip)
@@ -22,7 +21,7 @@ class TripsController < ApplicationController
 
   def update
     if @trip.update(params[:trip])
-      render json: @trip
+      render json: TripSerializer.new(@trip)
     else
       render json: {error: @trip.errors.full_messages}, status: 422
     end
