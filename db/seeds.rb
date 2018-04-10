@@ -44,10 +44,11 @@ Trip.all.each do |trip|
   cost = Faker::Number.decimal(2)
   start_time = trip.user_trips.first.start_date
   end_time = start_time + 2.hour
+  address = Faker::Address.street_address
   lat = Faker::Address.latitude
   lng = Faker::Address.longitude
   destination = Destination.all.sample
-  Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, lat: lat, lng: lng,trip_id: trip.id, destination_id: destination.id)
+  Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, address: address, lat: lat, lng: lng,trip_id: trip.id, destination_id: destination.id)
 end
 
 # fei's account
