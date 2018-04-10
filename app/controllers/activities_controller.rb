@@ -14,7 +14,7 @@ class ActivitiesController < ApplicationController
   def create
     @activity = Activity.new(activity_params)
     if @activity.save
-      render json: ActivitySerializer.new(@activity)
+      render json: @activity
     else
       render json: {errors: @activity.errors.full_messages}, status: 422
     end

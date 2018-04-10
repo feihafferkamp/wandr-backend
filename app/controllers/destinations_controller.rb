@@ -7,13 +7,13 @@ class DestinationsController < ApplicationController
   end
 
   def show
-    render json: DestinationSerializer.new(@destination)
+    render json: @destination
   end
 
   def create
     @destination = Destination.new(destination_params)
     if @destination.save
-      render json: DestinationSerializer.new(@destination)
+      render json: @destination
     else
       render json: {errors: @destination.errors.full_messages}, status: 422
     end
@@ -21,7 +21,7 @@ class DestinationsController < ApplicationController
 
   def update
     if @destination.update(params[:destination])
-      render json: DestinationSerializer.new(@destination)
+      render json: @destination
     else
       render json: {error: @destination.errors.full_messages}, status: 422
     end
