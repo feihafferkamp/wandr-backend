@@ -7,17 +7,16 @@ class UserTripsController < ApplicationController
   end
 
   def show
-    @trip = Trip.find(@user_trip.trip_id)
-    render json: {trip: TripSerializer.new(@trip), user_trip: UserTripSerializer.new(@user_trip)}
+    render json: @user_trip
   end
 
   def create
-    # @trip = Trip.find_or_create_by(trip_id)
-    # @user_trip = UserTrip.new(user_trip_params)
-    # @user_trip.user_id = user_in_session.id
-    # @user_trip.trip_id = @trip.id
-    # @user_trip.save
-    # render json: {trip: TripSerializer.new(@trip), user_trip: UserTripSerializer.new(@user_trip)}
+    @trip = Trip.find_or_create_by(trip_id)
+    @user_trip = UserTrip.new(user_trip_params)
+    @user_trip.user_id = user_in_session.id
+    @user_trip.trip_id = @trip.id
+    @user_trip.save
+    render json: @user_trip
   end
 
   def update

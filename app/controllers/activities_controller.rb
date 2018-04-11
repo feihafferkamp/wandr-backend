@@ -27,7 +27,7 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    if @activity.update(params[:activity])
+    if @activity.update(activity_params)
       render json: @activity
     else
       render json: {error: @activity.errors.full_messages}, status: 422

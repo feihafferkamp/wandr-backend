@@ -7,7 +7,8 @@ class TripsController < ApplicationController
   end
 
   def show
-    render json: @trip
+    @user_trip = @trip.user_trips.where(user_id: user_in_session.id)[0]
+    render json: {trip: TripSerializer.new(@trip), user_trip: @user_trip}
   end
 
   def create
@@ -24,7 +25,7 @@ class TripsController < ApplicationController
   end
 
   def update
-    if @trip.update(params[:trip])
+    if @trip.update(trip_params)
       render json: @trip
     else
       render json: {error: @trip.errors.full_messages}, status: 422
