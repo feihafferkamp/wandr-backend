@@ -2,8 +2,7 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :update, :destroy]
 
   def index
-    trip = Trip.find_by(id: params[:trip_id])
-    @activities = Activity.where(trip_id: trip.id)
+    @activities = Activity.where(trip_id: params[:trip_id])
     render json: @activities
   end
 
