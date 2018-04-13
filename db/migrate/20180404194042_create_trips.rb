@@ -1,7 +1,9 @@
 class CreateTrips < ActiveRecord::Migration[5.1]
   def change
+    enable_extension :citext
+    
     create_table :trips do |t|
-      t.string :name
+      t.citext :name
       t.string :description
       t.integer :duration
 

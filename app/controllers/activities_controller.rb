@@ -2,9 +2,7 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :update, :destroy]
 
   def index
-    # on client side, user_trip is just trip
-    trip = UserTrip.find(params[:trip_id]).trip
-    @activities = Activity.where(trip_id: trip.id)
+    @activities = Activity.all
     render json: @activities
   end
 
@@ -13,12 +11,12 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    destination = Destination.find_or_create_by(destination_params)
-    user_trip = UserTrip.find(params[:user_trip][:id])
-    trip=user_trip.trip
+    destination = Destination.find_or_create_by(name: params[:destination][:destination_name], lat: params[:destination][:lat], lng: params[:destination][:lng])
+    @user_trip = UserTrip.find(params[:user_trip][:id])
+    trip = @user_trip.trip
+    trip_destination = TripDestination.create(trip_id: trip.id, destination_id: destination.id)
     @activity = Activity.new(activity_params)
-    @activity.trip_id = trip.id
-    @activity.destination_id = destination.id
+    @activity.trip_destination_id = trip_destination.id
     if @activity.save
       render json: @activity
     else
@@ -42,14 +40,14 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:trip_id, :name, :description, :cost, :start_time, :end_time, :lat, :lng, :address)
+    params.require(:activity).permit(:name, :description, :cost, :start_time, :end_time, :lat, :lng, :address)
   end
 
   def set_activity
     @activity = Activity.find(params[:id])
   end
 
-  def destination_params
-    params.require(:destination).permit(:name, :description, :lat, :lng)
-  end
+  # def destination_params
+  #   params.require(:destination).permit(:lat, :lng)
+  # end
 end

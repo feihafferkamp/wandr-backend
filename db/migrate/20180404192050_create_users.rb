@@ -3,9 +3,9 @@ class CreateUsers < ActiveRecord::Migration[5.1]
     enable_extension :citext
 
     create_table :users do |t|
-      t.string :firstname
-      t.string :lastname
-      t.string :email, unique: true
+      t.citext :firstname
+      t.citext :lastname
+      t.citext :email, unique: true
       t.date :dob
       t.string :photo, default: ''
       t.string :hometown
