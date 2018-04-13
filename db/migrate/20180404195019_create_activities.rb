@@ -10,8 +10,7 @@ class CreateActivities < ActiveRecord::Migration[5.1]
       t.decimal :lat, precision: 10, scale: 6
       t.decimal :lng, precision: 10, scale: 6
       t.string :img, default: ''
-      t.integer :trip_id
-      t.integer :destination_id
+      t.integer :trip_destination_id
 
       t.timestamps
     end

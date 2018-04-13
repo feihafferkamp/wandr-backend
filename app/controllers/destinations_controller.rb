@@ -30,7 +30,7 @@ class DestinationsController < ApplicationController
   private
 
   def destination_params
-    params.require(:destination).permit(:name, :description, :duration)
+    params.require(:destination).permit(:name, :description, :lat, :lng)
   end
 
   def set_destination

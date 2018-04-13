@@ -11,18 +11,31 @@ class UserTripsController < ApplicationController
   end
 
   def create
-    @trip = Trip.find_or_create_by(trip_id)
     @user_trip = UserTrip.new(user_trip_params)
+    trip = Trip.find_or_create_by(trip_params)
+    @user_trip.trip_id = trip.id
     @user_trip.user_id = user_in_session.id
-    @user_trip.trip_id = @trip.id
-    @user_trip.save
-    render json: @user_trip
+    byebug
+    destinations = params[:destinations].each { |d| Destination.find_or_create_by(lat: d['lat'], lng: d['lng'])}
+    destinations.each {|d| TripDestination.create(trip_id: trip.id, destination_id: d.id)}
+    if @user_trip.save
+      render json: @user_trip
+    else
+      render json: {errors: @user_trip.errors.full_messages}, status: 422
+    end
   end
 
   def update
-    @trip = Trip.find(@user_trip.trip_id)
-    if @user_trip.update(user_trip_params) && @trip.update(trip_params)
-      render json: {trip: TripSerializer.new(@trip), user_trip: UserTripSerializer.new(@user_trip)}
+    trip = Trip.find(@user_trip.trip_id)
+    trip.update(trip_params)
+    trip.destinations.clear
+    newDestinations = params[:destinations].each { |d| Destination.find_or_create_by(lat: d['lat'], lng: d['lng'])}
+    byebug
+    newDestinations.each {|d| TripDestination.create(trip_id: trip.id, destination_id: d.id)}
+
+
+    if @user_trip.update(user_trip_params)
+      render json: @user_trip
     else
       render json: {error: @user_trip.errors.messages + ' & ' + @trip.errors.mesasges}
     end
@@ -45,6 +58,11 @@ class UserTripsController < ApplicationController
 
   def set_user_trip
     @user_trip = UserTrip.find(params[:id])
+  end
+
+  def destination_params
+    # params.require(:destination).permit(:name, :description, :lat, :lng)
+    params.require(:destinations).permit([:name, :description, :lat, :lng])
   end
 
 end

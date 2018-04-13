@@ -37,18 +37,28 @@ end
   Destination.create(name: name, description: description, lat: lat, lng: lng)
 end
 
+# trip_destinations
+3.times do
+  Trip.all.each do |trip|
+    destination = Destination.all.sample
+    TripDestination.create(trip_id: trip.id, destination_id: destination.id)
+  end
+end
+
 # activities
-Trip.all.each do |trip|
-  name = Faker::Coffee.blend_name
-  description = Faker::Coffee.notes #=> "balanced, silky, marzipan, orange-creamsicle, bergamot"
-  cost = Faker::Number.decimal(2)
-  start_time = trip.user_trips.first.start_date
-  end_time = start_time + 2.hour
-  address = Faker::Address.street_address + ', ' + Faker::Address.city + ', ' + Faker::Address.state_abbr + ' ' + Faker::Address.zip
-  lat = Faker::Address.latitude
-  lng = Faker::Address.longitude
-  destination = Destination.all.sample
-  Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, address: address, lat: lat, lng: lng,trip_id: trip.id, destination_id: destination.id)
+3.times do
+  TripDestination.all.each do |td|
+    trip = td.trip
+    name = Faker::Coffee.blend_name
+    description = Faker::Coffee.notes #=> "balanced, silky, marzipan, orange-creamsicle, bergamot"
+    cost = Faker::Number.decimal(2)
+    start_time = trip.user_trips.first.start_date
+    end_time = start_time + 2.hour
+    address = Faker::Address.street_address + ', ' + Faker::Address.city + ', ' + Faker::Address.state_abbr + ' ' + Faker::Address.zip
+    lat = Faker::Address.latitude
+    lng = Faker::Address.longitude
+    Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, address: address, lat: lat, lng: lng, trip_destination_id: td.id)
+  end
 end
 
 # fei's account

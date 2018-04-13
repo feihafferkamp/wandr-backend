@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404202139) do
+ActiveRecord::Schema.define(version: 20180413031452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,8 +26,7 @@ ActiveRecord::Schema.define(version: 20180404202139) do
     t.decimal "lat", precision: 10, scale: 6
     t.decimal "lng", precision: 10, scale: 6
     t.string "img", default: ""
-    t.integer "trip_id"
-    t.integer "destination_id"
+    t.integer "trip_destination_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -35,8 +34,8 @@ ActiveRecord::Schema.define(version: 20180404202139) do
   create_table "destinations", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.decimal "lat"
-    t.decimal "lng"
+    t.decimal "lat", precision: 7, scale: 3
+    t.decimal "lng", precision: 7, scale: 3
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -67,6 +66,13 @@ ActiveRecord::Schema.define(version: 20180404202139) do
     t.integer "priority"
     t.datetime "due_date"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trip_destinations", force: :cascade do |t|
+    t.integer "trip_id"
+    t.integer "destination_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
