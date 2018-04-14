@@ -11,10 +11,11 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    destination = Destination.find_or_create_by(name: params[:destination][:destination_name], lat: params[:destination][:lat], lng: params[:destination][:lng])
+    # destination = Destination.find_or_create_by(name: params[:destination][:destination_name], lat: params[:destination][:lat], lng: params[:destination][:lng])
+
     @user_trip = UserTrip.find(params[:user_trip][:id])
     trip = @user_trip.trip
-    trip_destination = TripDestination.create(trip_id: trip.id, destination_id: destination.id)
+    trip_destination = TripDestination.create(trip_id: trip.id, destination_id: params[:destination][:id])
     @activity = Activity.new(activity_params)
     @activity.trip_destination_id = trip_destination.id
     if @activity.save

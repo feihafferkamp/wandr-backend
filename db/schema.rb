@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20180413031452) do
   end
 
   create_table "destinations", force: :cascade do |t|
-    t.string "name"
+    t.citext "name"
     t.text "description"
     t.decimal "lat", precision: 7, scale: 3
     t.decimal "lng", precision: 7, scale: 3
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20180413031452) do
   end
 
   create_table "trips", force: :cascade do |t|
-    t.string "name"
+    t.citext "name"
     t.string "description"
     t.integer "duration"
     t.datetime "created_at", null: false
@@ -104,9 +104,9 @@ ActiveRecord::Schema.define(version: 20180413031452) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "firstname"
-    t.string "lastname"
-    t.string "email"
+    t.citext "firstname"
+    t.citext "lastname"
+    t.citext "email"
     t.date "dob"
     t.string "photo", default: ""
     t.string "hometown"
