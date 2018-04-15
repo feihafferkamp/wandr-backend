@@ -16,7 +16,7 @@ class UserTripsController < ApplicationController
     @user_trip.trip_id = trip.id
     @user_trip.user_id = user_in_session.id
     params[:destinations].map do |d|
-      destination = Destination.find_or_create_by(name: d['name'], lat: d['lat'], lng: d['lng'])
+      destination = Destination.find_or_create_by(name: d['name'], description: d['description'], lat: d['lat'], lng: d['lng'])
       TripDestination.create(trip_id: trip.id, destination_id: destination.id, arrival: d['arrival'], departure: d['departure'])
     end
     if @user_trip.save
@@ -31,7 +31,7 @@ class UserTripsController < ApplicationController
     trip = Trip.find(@user_trip.trip_id)
     trip.update(trip_params)
     trip.destinations.clear
-    newDestinations = params[:destinations].map { |d| Destination.find_or_create_by(name: d['name'], lat: d['lat'], lng: d['lng'])}
+    newDestinations = params[:destinations].map { |d| Destination.find_or_create_by(name: d['name'], description: d['description'], lat: d['lat'], lng: d['lng'])}
     newDestinations.each {|nd| TripDestination.create(trip_id: trip.id, destination_id: nd.id)}
     if @user_trip.update(user_trip_params)
       render json: @user_trip
