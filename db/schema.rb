@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 20180413031452) do
   create_table "trip_destinations", force: :cascade do |t|
     t.integer "trip_id"
     t.integer "destination_id"
+    t.date "arrival"
+    t.date "departure"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

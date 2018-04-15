@@ -15,9 +15,12 @@ class UserTripsController < ApplicationController
     trip = Trip.find_or_create_by(trip_params)
     @user_trip.trip_id = trip.id
     @user_trip.user_id = user_in_session.id
-    destinations = params[:destinations].map { |d| Destination.find_or_create_by(name: d['name'], lat: d['lat'], lng: d['lng'])}
-    destinations.each {|d| TripDestination.create(trip_id: trip.id, destination_id: d.id)}
+    params[:destinations].map do |d|
+      destination = Destination.find_or_create_by(name: d['name'], lat: d['lat'], lng: d['lng'])
+      TripDestination.create(trip_id: trip.id, destination_id: destination.id, arrival: d['arrival'], departure: d['departure'])
+    end
     if @user_trip.save
+      @user_trip.travel_age = @user_trip.start_date.year - user_in_session.dob.year
       render json: @user_trip
     else
       render json: {errors: @user_trip.errors.full_messages}, status: 422

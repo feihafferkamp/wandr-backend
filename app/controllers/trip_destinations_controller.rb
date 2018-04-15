@@ -23,7 +23,7 @@ class TripDestinationsController < ApplicationController
   private
 
   def trip_destination_params
-    params.require(:trip_destination).permit(:name, :description, :lat, :lng)
+    params.require(:trip_destination).permit(:trip_id, :destination_id, :arrival, :departure)
   end
 
   def set_trip_destination
