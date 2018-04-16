@@ -15,11 +15,12 @@ class FriendshipsController < ApplicationController
     end
   end
 
-  def update  # when user accepts a friend request
-    invite = Friendship.find_by(user_id: friend.id, friend_id: user_in_session.id)
+  def update  # when user accepts/rejects a friend request
+    byebug
+    invite = Friendship.find_by(user_id: @friend.id, friend_id: user_in_session.id)
     if params[:accepted]
       invite.update(accepted: true)
-      @friendship = Friendship.create(user_id: user_in_session.id, friend_id: @friend.id, accepted: true)
+      @friendship = Friendship.new(user_id: user_in_session.id, friend_id: @friend.id, accepted: true)
     end
     if @friendship.save
       render json: @friendship
@@ -29,8 +30,10 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    friendship = Friendship.find_by(user_id: user_in_session.id, friend_id: @friend.id)
-    friendship.destroy
+    friendship_a = Friendship.find_by(user_id: user_in_session.id, friend_id: @friend.id)
+    friendship_b = Friendship.find_by(user_id: @friend.id, friend_id: user_in_session.id)
+    friendship_a.destroy
+    friendship_b.destroy
     render json: {message: "Successfully unfriended."}
   end
 

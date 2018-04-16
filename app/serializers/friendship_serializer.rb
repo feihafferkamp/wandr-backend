@@ -1,4 +1,4 @@
 class FriendshipSerializer < ActiveModel::Serializer
-  attributes :id, :accepted, :friend_id
-  belongs_to :friend, serializer: UserSerializer
+  attributes :id, :user_id, :friend_id, :accepted
+  belongs_to :friend
 end

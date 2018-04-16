@@ -1,5 +1,5 @@
 # users
-3.times do
+5.times do
   firstname = Faker::Name.first_name
   lastname = Faker::Name.last_name
   email = Faker::Internet.email
@@ -69,4 +69,12 @@ fei_trips = Trip.all.sample(5)
 fei_trips.each do |trip|
   start_date = Faker::Date.forward(rand(15..60))
   UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - fei.dob.year, user_id: fei.id, trip_id: trip.id)
+end
+
+# friend's account
+jon = User.create(firstname: 'Jonathan', lastname: 'Hafferkamp', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Spokane', username: 'jon', password: '123')
+jon_trips = Trip.all.sample(5)
+jon_trips.each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - jon.dob.year, user_id: jon.id, trip_id: trip.id)
 end
