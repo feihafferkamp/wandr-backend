@@ -28,15 +28,18 @@ class UserTripsController < ApplicationController
   end
 
   def update
-    trip = Trip.find(@user_trip.trip_id)
+    trip = Trip.find_by(id: @user_trip.trip_id)
     trip.update(trip_params)
     trip.destinations.clear
-    newDestinations = params[:destinations].map { |d| Destination.find_or_create_by(name: d['name'], description: d['description'], lat: d['lat'], lng: d['lng'])}
-    newDestinations.each {|nd| TripDestination.create(trip_id: trip.id, destination_id: nd.id)}
+    params[:destinations].map { |d|
+      new_destination = Destination.find_or_create_by(name: d['name'], description: d['description'], lat: d['lat'], lng: d['lng'])
+      puts 'ARRIVAL TIME:' + d['arrival']
+      TripDestination.create(trip_id: trip.id, destination_id: new_destination.id, arrival: d['arrival'], departure: d['departure'])
+    }
     if @user_trip.update(user_trip_params)
       render json: @user_trip
     else
-      render json: {error: @user_trip.errors.messages + ' & ' + @trip.errors.mesasges}
+      render json: {error: @user_trip.errors.messages}
     end
   end
 
@@ -56,7 +59,7 @@ class UserTripsController < ApplicationController
   end
 
   def set_user_trip
-    @user_trip = UserTrip.find(params[:id])
+    @user_trip = UserTrip.find_by(id: params[:id])
   end
 
 end

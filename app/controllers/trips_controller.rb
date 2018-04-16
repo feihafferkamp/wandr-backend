@@ -5,12 +5,11 @@ class TripsController < ApplicationController
     @trips = Trip.all
     render json: @trips
   end
-  #
-  # def show
-  #   # @user_trip = @trip.user_trips.where(user_id: user_in_session.id)[0]
-  #   render json: @user_trip
-  # end
-  #
+
+  def show
+    render json: @trip
+  end
+
   # def create
   #   @trip = Trip.new(trip_params)
   #   if @trip.save
@@ -24,7 +23,7 @@ class TripsController < ApplicationController
   #     render json: {errors: @trip.errors.full_messages}, status: 422
   #   end
   # end
-  #
+
   # def update
   #   if @trip.update(trip_params)
   #     render json: @trip
@@ -32,11 +31,11 @@ class TripsController < ApplicationController
   #     render json: {error: @trip.errors.full_messages}, status: 422
   #   end
   # end
-  #
-  # def destroy
-  #   @trip.destroy
-  #   render json: {message: "Trip deleted"}
-  # end
+
+  def destroy
+    @trip.destroy
+    render json: {message: "Trip deleted"}
+  end
 
   private
 
@@ -53,7 +52,7 @@ class TripsController < ApplicationController
   end
 
   def set_trip
-    @trip = Trip.find(params[:id])
+    @trip = Trip.find_by(id: params[:id])
   end
 
 end

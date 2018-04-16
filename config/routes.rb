@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :trips, except: [:new, :edit]
   resources :activities, except: [:new, :edit]
   resources :destinations, except: [:new, :edit, :destroy]
+  resources :friendships, except: [:new, :edit]
 
   # resources :tags, except: [:new, :edit, :destroy]
 

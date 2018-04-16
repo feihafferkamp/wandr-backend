@@ -3,7 +3,13 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    render json: @users
+    accepted_invites = user_in_session.friendships.select {|f| friendship.accepted}
+    @friends = accepted_invites.map {|i| i.friend}
+    pending_invites = Friendship.where(friend_id: user_in_session.id, accepted: false)
+    @pending_friends = pending_invites.map {|i| i.user }
+    sent_invites = Friendship.where(user_id: user_in_session.id, accepted: false)
+    @requested_friends = sent_invites.map {|i| i.friend}
+    render json: {all: @users, friends: @friends, pending_friends: @pending_friends, requested_friends: @requested_friends}
   end
 
   def show
@@ -41,7 +47,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
   end
 
 end

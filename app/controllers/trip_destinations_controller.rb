@@ -27,7 +27,7 @@ class TripDestinationsController < ApplicationController
   end
 
   def set_trip_destination
-    @trip_destination = TripDestination.find(params[:id])
+    @trip_destination = TripDestination.find_by(id: params[:id])
   end
 
 end
