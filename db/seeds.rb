@@ -11,7 +11,7 @@
 end
 
 # trips
-30.times do
+15.times do
   name = Faker::Hipster.word
   description = Faker::Hipster.paragraph
   duration = Faker::Number.between(3, 20)
@@ -29,7 +29,7 @@ Trip.all.each do |trip|
 end
 
 # destinations
-20.times do
+15.times do
   name = Faker::HarryPotter.location
   description = Faker::HarryPotter.quote
   lat = Faker::Address.latitude
@@ -49,7 +49,7 @@ end
 end
 
 # activities
-3.times do
+2.times do
   TripDestination.all.each do |td|
     name = Faker::Coffee.blend_name
     description = Faker::Coffee.notes #=> "balanced, silky, marzipan, orange-creamsicle, bergamot"
@@ -65,8 +65,8 @@ end
 
 # fei's account
 fei = User.create(firstname: 'Fei', lastname: 'Hafferkamp', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Omaha', username: 'fei', password: '123')
-
-Trip[0, 10].each do |trip|
+fei_trips = Trip.all.sample(5)
+fei_trips.each do |trip|
   start_date = Faker::Date.forward(rand(15..60))
   UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - fei.dob.year, user_id: fei.id, trip_id: trip.id)
 end
