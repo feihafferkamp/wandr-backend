@@ -12,10 +12,11 @@ Rails.application.routes.draw do
   post "/signup", to: "users#create"
   post "/login", to: "auth#create"
   get "/current_user", to: "auth#show"
-  resources :chatrooms
-  post '/chatrooms/:chatroom_id/authorize', to: 'chatrooms#open'
-  post '/chatrooms/:chatroom_id/message', to: 'chatrooms#message'
-  # post '/chatrooms/delete_message', to: 'chatrooms#delete_message'
 
   mount ActionCable.server => '/cable'
+
+  resources :chatrooms
+  post '/chatrooms/:chatroom_id/authorize', to: 'chatrooms#open'
+	post '/chatrooms/:chatroom_id/message', to: 'chatrooms#add_message'
+  # post '/chatrooms/delete_message', to: 'chatrooms#delete_message'
 end
