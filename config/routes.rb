@@ -15,8 +15,5 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => '/cable'
 
-  resources :chatrooms
-  post '/chatrooms/:chatroom_id/authorize', to: 'chatrooms#open'
-	post '/chatrooms/:chatroom_id/message', to: 'chatrooms#add_message'
-  # post '/chatrooms/delete_message', to: 'chatrooms#delete_message'
+	post '/users/add_message', to: 'users#add_message'
 end

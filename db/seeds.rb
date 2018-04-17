@@ -31,7 +31,7 @@ end
 # destinations
 15.times do
   name = Faker::HarryPotter.location
-  description = Faker::HarryPotter.quote
+  description = Faker::Hipster.paragraphs(1)
   lat = Faker::Address.latitude
   lng = Faker::Address.longitude
   Destination.create(name: name, description: description, lat: lat, lng: lng)
@@ -72,26 +72,49 @@ fei_trips.each do |trip|
 end
 
 # friends' accounts
-jon = User.create(firstname: 'Jonathan', lastname: 'Hafferkamp', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Spokane', username: 'jon', password: '123')
+jim = User.create(firstname: 'Jim', lastname: 'Halpert', email: Faker::Internet.email, dob: Faker::Date.birthday(30, 35), hometown: 'Scranton', username: 'jim', password: '123')
 Trip.all.sample(3).each do |trip|
   start_date = Faker::Date.forward(rand(15..60))
-  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - jon.dob.year, user_id: jon.id, trip_id: trip.id)
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - jim.dob.year, user_id: jim.id, trip_id: trip.id)
 end
 
-bob = User.create(firstname: 'Bobbet', lastname: 'Ho', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Beijing', username: 'bob', password: '123')
+mscott = User.create(firstname: 'Michael', lastname: 'Scott ', email: Faker::Internet.email, dob: Faker::Date.birthday(40, 45), hometown: 'Scranton', username: 'mscott', password: '123')
 Trip.all.sample(2).each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - mscott.dob.year, user_id: mscott.id, trip_id: trip.id)
+end
+
+ron = User.create(firstname: 'Ron', lastname: 'Swanson', email: Faker::Internet.email, dob: Faker::Date.birthday(40, 45), hometown: 'Pawnee', username: 'ron', password: '123')
+Trip.all.sample(4).each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - ron.dob.year, user_id: ron.id, trip_id: trip.id)
+end
+
+tam = User.create(firstname: 'Tammy', lastname: 'I', email: Faker::Internet.email, dob: Faker::Date.birthday(40, 45), hometown: 'Pawnee', username: 'tam', password: '123')
+Trip.all.sample(2).each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - tam.dob.year, user_id: tam.id, trip_id: trip.id)
+end
+
+bob = User.create(firstname: 'Bob', lastname: 'Loblaw', email: Faker::Internet.email, dob: Faker::Date.birthday(40, 50), hometown: 'Somewhere', username: 'bob', password: '123')
+Trip.all.sample(5).each do |trip|
   start_date = Faker::Date.forward(rand(15..60))
   UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - bob.dob.year, user_id: bob.id, trip_id: trip.id)
 end
 
-sam = User.create(firstname: 'Samhita', lastname: 'Noone', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Atlanta', username: 'sam', password: '123')
-Trip.all.sample(4).each do |trip|
-  start_date = Faker::Date.forward(rand(15..60))
-  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - sam.dob.year, user_id: sam.id, trip_id: trip.id)
-end
+# friendships
+Friendship.create(user_id: fei.id, friend_id: jim.id, accepted: true)
+Friendship.create(user_id: fei.id, friend_id: bob.id, accepted: true)
+Friendship.create(user_id: fei.id, friend_id: ron.id, accepted: true)
+Friendship.create(user_id: fei.id, friend_id: mscott.id, accepted: true)
+Friendship.create(user_id: fei.id, friend_id: tam.id, accepted: true)
 
-pcot = User.create(firstname: 'Preston', lastname: 'Cotnoir', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Atlanta', username: 'pcot', password: '123')
-Trip.all.sample(2).each do |trip|
-  start_date = Faker::Date.forward(rand(15..60))
-  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - pcot.dob.year, user_id: pcot.id, trip_id: trip.id)
+# messages
+3.times do
+  Message.create(sender_id: fei.id, receiver_id: ron.id, content: Faker::ChuckNorris.fact)
+  Message.create(sender_id: ron.id, receiver_id: fei.id, content: Faker::VForVendetta.quote)
+  Message.create(sender_id: fei.id, receiver_id: bob.id, content: Faker::Hipster.sentence)
+  Message.create(sender_id: bob.id, receiver_id: fei.id, content: Faker::HarryPotter.quote)
+  Message.create(sender_id: jim.id, receiver_id: fei.id, content: Faker::Movie.quote)
+  Message.create(sender_id: mscott.id, receiver_id: fei.id, content: Faker::Dessert.topping)
 end

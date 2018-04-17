@@ -31,13 +31,6 @@ ActiveRecord::Schema.define(version: 20180417034719) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "chatrooms", force: :cascade do |t|
-    t.string "name"
-    t.string "password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "destinations", force: :cascade do |t|
     t.citext "name"
     t.text "description"
@@ -57,12 +50,10 @@ ActiveRecord::Schema.define(version: 20180417034719) do
 
   create_table "messages", force: :cascade do |t|
     t.string "content"
-    t.bigint "user_id"
-    t.bigint "chatroom_id"
+    t.integer "sender_id"
+    t.integer "receiver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -136,6 +127,4 @@ ActiveRecord::Schema.define(version: 20180417034719) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "messages", "chatrooms"
-  add_foreign_key "messages", "users"
 end
