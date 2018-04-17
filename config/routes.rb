@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   resources :trips, except: [:new, :edit]
   resources :activities, except: [:new, :edit]
   resources :destinations, except: [:new, :edit, :destroy]
-  resources :friendships, only: [:create, :update]
-  post "friendships/delete", to: "friendships#destroy"
-  post "friendships/update", to: "friendships#update"
+  resources :friendships, except: [:new, :edit]
+  post "/friendships/update", to: "friendships#update"
+  post "/friendships/cancel", to: "friendships#cancel"
+  delete "/friendships/destroy", to: "friendships#destroy"
 
   # resources :tags, except: [:new, :edit, :destroy]
 

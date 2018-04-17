@@ -71,10 +71,27 @@ fei_trips.each do |trip|
   UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - fei.dob.year, user_id: fei.id, trip_id: trip.id)
 end
 
-# friend's account
+# friends' accounts
 jon = User.create(firstname: 'Jonathan', lastname: 'Hafferkamp', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Spokane', username: 'jon', password: '123')
-jon_trips = Trip.all.sample(5)
-jon_trips.each do |trip|
+Trip.all.sample(3).each do |trip|
   start_date = Faker::Date.forward(rand(15..60))
   UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - jon.dob.year, user_id: jon.id, trip_id: trip.id)
+end
+
+bob = User.create(firstname: 'Bobbet', lastname: 'Ho', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Beijing', username: 'bob', password: '123')
+Trip.all.sample(2).each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - bob.dob.year, user_id: bob.id, trip_id: trip.id)
+end
+
+sam = User.create(firstname: 'Samhita', lastname: 'Noone', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Atlanta', username: 'sam', password: '123')
+Trip.all.sample(4).each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - sam.dob.year, user_id: sam.id, trip_id: trip.id)
+end
+
+pcot = User.create(firstname: 'Preston', lastname: 'Cotnoir', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Atlanta', username: 'pcot', password: '123')
+Trip.all.sample(2).each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - pcot.dob.year, user_id: pcot.id, trip_id: trip.id)
 end
