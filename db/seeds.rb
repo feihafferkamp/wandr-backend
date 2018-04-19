@@ -1,14 +1,22 @@
 # # users
-# 5.times do
-#   firstname = Faker::Name.first_name
-#   lastname = Faker::Name.last_name
-#   email = Faker::Internet.email
-#   dob = Faker::Date.birthday(18, 80)
-#   hometown = Faker::Address.city
-#   username = Faker::Twitter.screen_name
-#   password = Faker::Music.instrument
-#   User.create(firstname: firstname, lastname: lastname, email: email, dob: dob, hometown: hometown, username: username, password: password)
-# end
+5.times do
+  firstname = Faker::Name.first_name
+  lastname = Faker::Name.last_name
+  email = Faker::Internet.email
+  dob = Faker::Date.birthday(18, 80)
+  hometown = Faker::Address.city
+  username = Faker::Twitter.screen_name
+  password = Faker::Music.instrument
+  User.create(firstname: firstname, lastname: lastname, email: email, dob: dob, hometown: hometown, username: username, password: password)
+end
+
+# trips
+trip_names = ['Spring Break', 'Best Trip Eva', 'Iceland', 'Cross-Country Roadtrip', 'Weekend Getaway', 'Camping', 'Memorial Day Extravaganza']
+trip_names.each do |t|
+  description = Faker::Hipster.paragraph
+  duration = Faker::Number.between(3, 20)
+  Trip.create(name: t, description: description, duration: duration)
+end
 
 # fei's account
 fei = User.create(firstname: 'Fei', lastname: 'Hafferkamp', email: Faker::Internet.email, dob: Faker::Date.birthday(25, 27), hometown: 'Omaha', username: 'fei', password: '123')
@@ -65,24 +73,19 @@ Friendship.create(user_id: fei.id, friend_id: mscott.id, accepted: true)
   Message.create(sender_id: mscott.id, receiver_id: fei.id, content: Faker::Dessert.topping)
 end
 
-# trips
-trip_names = ['Spring Break', 'Best Trip Eva', 'Iceland', 'Cross-Country Roadtrip', 'Weekend Getaway', 'Camping', 'Memorial Day Extravaganza']
-trip_names.each do |t|
-  description = Faker::Hipster.paragraph
-  duration = Faker::Number.between(3, 20)
-  Trip.create(name: t, description: description, duration: duration)
-end
+
 
 # user_trips
-Trip.all.each do |trip|
-  user = User.all.sample
-  ratings = Faker::Number.between(0, 5)
-  start_date = Faker::Date.forward(rand(15..60))
-  end_date = start_date + trip.duration
-  travel_age = start_date.year - user.dob.year
-  UserTrip.create(ratings: ratings, start_date: start_date, end_date: end_date, travel_age: travel_age, user_id: user.id, trip_id: trip.id)
+3.times do
+  Trip.all.each do |trip|
+    user = User.all.sample
+    ratings = Faker::Number.between(0, 5)
+    start_date = Faker::Date.forward(rand(15..60))
+    end_date = start_date + trip.duration
+    travel_age = start_date.year - user.dob.year
+    UserTrip.create(ratings: ratings, start_date: start_date, end_date: end_date, travel_age: travel_age, user_id: user.id, trip_id: trip.id)
+  end
 end
-
 
 # destinations
 15.times do
