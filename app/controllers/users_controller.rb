@@ -65,7 +65,7 @@ class UsersController < ApplicationController
     users.map do |user|
       s_msg = Message.where(sender_id: user.id)
       r_msg = Message.where(receiver_id: user.id)
-      {id: user.id, username: user.username, firstname: user.firstname, lastname: user.lastname, dob: user.dob, hometown: user.hometown, sent_messages: s_msg, received_messages: r_msg}
+      {id: user.id, username: user.username, firstname: user.firstname, lastname: user.lastname, dob: user.dob, hometown: user.hometown, email: user.email, photo: user.photo, sent_messages: s_msg, received_messages: r_msg}
     end
 	end
 

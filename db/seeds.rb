@@ -1,4 +1,4 @@
-# # users
+# random users
 5.times do
   firstname = Faker::Name.first_name
   lastname = Faker::Name.last_name
@@ -74,17 +74,14 @@ Friendship.create(user_id: fei.id, friend_id: mscott.id, accepted: true)
 end
 
 
-
 # user_trips
-3.times do
-  Trip.all.each do |trip|
-    user = User.all.sample
-    ratings = Faker::Number.between(0, 5)
-    start_date = Faker::Date.forward(rand(15..60))
-    end_date = start_date + trip.duration
-    travel_age = start_date.year - user.dob.year
-    UserTrip.create(ratings: ratings, start_date: start_date, end_date: end_date, travel_age: travel_age, user_id: user.id, trip_id: trip.id)
-  end
+Trip.all.each do |trip|
+  user = User.all.sample
+  ratings = Faker::Number.between(0, 5)
+  start_date = Faker::Date.forward(rand(15..60))
+  end_date = start_date + trip.duration
+  travel_age = start_date.year - user.dob.year
+  UserTrip.create(ratings: ratings, start_date: start_date, end_date: end_date, travel_age: travel_age, user_id: user.id, trip_id: trip.id)
 end
 
 # destinations
@@ -97,14 +94,12 @@ end
 end
 
 # trip_destinations
-3.times do
-  UserTrip.all.each do |user_trip|
-    trip = user_trip.trip
-    destination = Destination.all.sample
-    arrival = user_trip.start_date + rand(0..trip.duration)
-    departure = arrival + rand(0..7)
-    TripDestination.create(trip_id: trip.id, destination_id: destination.id, arrival: arrival, departure: departure)
-  end
+UserTrip.all.each do |user_trip|
+  trip = user_trip.trip
+  destination = Destination.all.sample
+  arrival = user_trip.start_date + rand(0..trip.duration)
+  departure = arrival + rand(0..7)
+  TripDestination.create(trip_id: trip.id, destination_id: destination.id, arrival: arrival, departure: departure)
 end
 
 # activities
@@ -120,4 +115,10 @@ end
     lng = Faker::Address.longitude
     Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, address: address, lat: lat, lng: lng, trip_destination_id: td.id)
   end
+end
+
+#add user photos
+User.all.each do |u|
+  u.photo = Faker::Avatar.image
+  u.save
 end
