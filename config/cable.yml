@@ -6,5 +6,8 @@ test:
 
 production:
   adapter: redis
-  url: redis://localhost:6379/1
+  url: redis://h:pa46d943bd0b6b887c5fcbcf3a005a9c6e8b02fef410e53f00bbd7c1d894b17c1@ec2-18-232-216-63.compute-1.amazonaws.com:23899
   channel_prefix: wandr-backend_production
+  host: ec2-18-232-216-63.compute-1.amazonaws.com
+  port: 23899
+  password: pa46d943bd0b6b887c5fcbcf3a005a9c6e8b02fef410e53f00bbd7c1d894b17c1
