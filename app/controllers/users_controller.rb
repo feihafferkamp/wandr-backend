@@ -42,7 +42,6 @@ class UsersController < ApplicationController
 
   def add_message
     receiver = User.find_by(id: params[:id])
-    byebug
     if user_in_session && receiver
       message = Message.create(sender: user_in_session, receiver: receiver, content: params[:content])
       UserChannel.broadcast_to(receiver, prepare_message(message))
