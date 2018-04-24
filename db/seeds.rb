@@ -1,15 +1,3 @@
-# random users
-5.times do
-  firstname = Faker::Name.first_name
-  lastname = Faker::Name.last_name
-  email = Faker::Internet.email
-  dob = Faker::Date.birthday(18, 80)
-  hometown = Faker::Address.city
-  username = Faker::Twitter.screen_name
-  password = Faker::Music.instrument
-  User.create(firstname: firstname, lastname: lastname, email: email, dob: dob, hometown: hometown, username: username, password: password)
-end
-
 # trips
 trip_names = ['Spring Break', 'Best Trip Eva', 'Iceland', 'Cross-Country Roadtrip', 'Weekend Getaway', 'Camping', 'Memorial Day Extravaganza']
 trip_names.each do |t|
@@ -40,7 +28,7 @@ Trip.all.sample(2).each do |trip|
 end
 
 ron = User.create(firstname: 'Ron', lastname: 'Swanson', email: Faker::Internet.email, dob: Faker::Date.birthday(40, 45), hometown: 'Pawnee', username: 'ron', password: '123')
-Trip.all.sample(4).each do |trip|
+Trip.all.sample(3).each do |trip|
   start_date = Faker::Date.forward(rand(15..60))
   UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - ron.dob.year, user_id: ron.id, trip_id: trip.id)
 end
@@ -52,27 +40,54 @@ Trip.all.sample(2).each do |trip|
 end
 
 bob = User.create(firstname: 'Bob', lastname: 'Loblaw', email: Faker::Internet.email, dob: Faker::Date.birthday(40, 50), hometown: 'Somewhere', username: 'bob', password: '123')
-Trip.all.sample(5).each do |trip|
+Trip.all.sample(1).each do |trip|
   start_date = Faker::Date.forward(rand(15..60))
   UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - bob.dob.year, user_id: bob.id, trip_id: trip.id)
 end
 
+# random users
+demo = User.create(firstname: 'De', lastname: 'Mo', email: Faker::Internet.email, dob: Faker::Date.birthday(40, 50), hometown: 'Somewhere', username: 'demo', password: '123')
+Trip.all.sample(5).each do |trip|
+  start_date = Faker::Date.forward(rand(15..60))
+  UserTrip.create(ratings: Faker::Number.between(0, 5), start_date: start_date, end_date: start_date + trip.duration, travel_age: start_date.year - demo.dob.year, user_id: demo.id, trip_id: trip.id)
+end
+
+5.times do
+  firstname = Faker::Name.first_name
+  lastname = Faker::Name.last_name
+  email = Faker::Internet.email
+  dob = Faker::Date.birthday(18, 80)
+  hometown = Faker::Address.city
+  username = Faker::Twitter.screen_name
+  password = Faker::Music.instrument
+  User.create(firstname: firstname, lastname: lastname, email: email, dob: dob, hometown: hometown, username: username, password: password)
+end
+
+#add user photos
+User.all.each do |u|
+  u.photo = Faker::Avatar.image
+  u.save
+end
+
 # friendships
 Friendship.create(user_id: fei.id, friend_id: jim.id, accepted: true)
-Friendship.create(user_id: fei.id, friend_id: bob.id, accepted: true)
-Friendship.create(user_id: fei.id, friend_id: ron.id, accepted: true)
 Friendship.create(user_id: fei.id, friend_id: mscott.id, accepted: true)
+Friendship.create(user_id: fei.id, friend_id: demo.id, accepted: true)
+Friendship.create(user_id: fei.id, friend_id: bob.id, accepted: false)
+Friendship.create(user_id: fei.id, friend_id: ron.id, accepted: false)
 
 # messages
 2.times do
   Message.create(sender_id: fei.id, receiver_id: ron.id, content: Faker::ChuckNorris.fact)
   Message.create(sender_id: ron.id, receiver_id: fei.id, content: Faker::VForVendetta.quote)
-  Message.create(sender_id: fei.id, receiver_id: bob.id, content: Faker::Hipster.sentence)
+  Message.create(sender_id: fei.id, receiver_id: bob.id, content: Faker::ChuckNorris.fact)
   Message.create(sender_id: bob.id, receiver_id: fei.id, content: Faker::HarryPotter.quote)
   Message.create(sender_id: jim.id, receiver_id: fei.id, content: Faker::Movie.quote)
   Message.create(sender_id: mscott.id, receiver_id: fei.id, content: Faker::Dessert.topping)
+  Message.create(sender_id: fei.id, receiver_id: demo.id, content: Faker::ChuckNorris.fact)
+  Message.create(sender_id: demo.id, receiver_id: fei.id, content: Faker::Hipster.sentence)
+  Message.create(sender_id: mscott.id, receiver_id: demo.id, content: Faker::Dessert.topping)
 end
-
 
 # user_trips
 Trip.all.each do |trip|
@@ -115,10 +130,4 @@ end
     lng = Faker::Address.longitude
     Activity.create(name: name, description: description, cost: cost, start_time: start_time, end_time: end_time, address: address, lat: lat, lng: lng, trip_destination_id: td.id)
   end
-end
-
-#add user photos
-User.all.each do |u|
-  u.photo = Faker::Avatar.image
-  u.save
 end
