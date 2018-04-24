@@ -6,4 +6,4 @@ test:
 
 production:
   adapter: redis
-  url: redis://redistogo:e2d0a0eb1531f5cb1c276180dd2223ac@albacore.redistogo.com:10019/
+  url: redis://redistogo:e2d0a0eb1531f5cb1c276180dd2223ac@albacore.redistogo.com:10019

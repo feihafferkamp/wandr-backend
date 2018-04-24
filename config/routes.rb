@@ -8,12 +8,10 @@ Rails.application.routes.draw do
   post "/friendships/update", to: "friendships#update"
   post "/friendships/cancel", to: "friendships#cancel"
   delete "/friendships/destroy", to: "friendships#destroy"
-  # resources :tags, except: [:new, :edit, :destroy]
   post "/signup", to: "users#create"
   post "/login", to: "auth#create"
   get "/current_user", to: "auth#show"
 
   mount ActionCable.server => '/cable'
-
 	post '/users/add_message', to: 'users#add_message'
 end
