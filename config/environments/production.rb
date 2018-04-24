@@ -34,12 +34,8 @@ Rails.application.configure do
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'ws://localhost:3000/cable'
-  # config.action_cable.allowed_request_origins = [ 'http://localhost:3000', /http:\/\/localhost:3000.*/ ]
-
-  config.middleware.use ChatActionCable
-  config.web_socket_server_url = "wss://wandr-backend.herokuapp.com/"
-
-
+  config.action_cable.allowed_request_origins = [ 'http://localhost:3000', 'http://wandr-frontend.herokuapp.com', 'https://wandr-frontend.herokuapp.com' ]
+  config.web_socket_server_url = "wss://wandr-backend.herokuapp.com/cable"
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
