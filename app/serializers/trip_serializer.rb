@@ -1,5 +1,5 @@
 class TripSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :duration
+  attributes :id, :name, :description, :duration, :destinations
 
   has_many :user_trips
   has_many :users, through: :user_trips
