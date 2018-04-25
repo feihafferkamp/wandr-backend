@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     sent_invites = Friendship.where(user_id: user_in_session.id, accepted: false)
     @requested_friends = sent_invites.map {|i| i.friend}
     @strangers = User.all.select {|u| user_in_session.id != u.id && !@friends.include?(u) && !@pending_friends.include?(u) && !@requested_friends.include?(u)}
-    render json: {friends: with_messages(@friends), pending_friends: @pending_friends, requested_friends: @requested_friends, strangers: @strangers}
+    render json: {friends: with_messages_and_trips(@friends), pending_friends: @pending_friends, requested_friends: @requested_friends, strangers: @strangers}
   end
 
   def show
@@ -61,13 +61,19 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
   end
 
-	def with_messages(users)
+	def with_messages_and_trips(users)
     users.map do |user|
       s_msg = Message.where(sender_id: user.id)
       r_msg = Message.where(receiver_id: user.id)
-      {id: user.id, username: user.username, firstname: user.firstname, lastname: user.lastname, dob: user.dob, hometown: user.hometown, email: user.email, photo: user.photo, trips: user.trips, sent_messages: s_msg, received_messages: r_msg}
+      {id: user.id, username: user.username, firstname: user.firstname, lastname: user.lastname, dob: user.dob, hometown: user.hometown, email: user.email, photo: user.photo, trips: prepare_trips(user.trips), sent_messages: s_msg, received_messages: r_msg}
     end
 	end
+
+  def prepare_trips(trips)
+    trips.map do |trip|
+      {id: trip.id, name: trip.name, description: trip.description, duration: trip.duration, destinations: trip.destinations, activities: trip.activities}
+    end
+  end
 
 	def prepare_message(message)
     {id: message.id, content: message.content, receiver_id: message.receiver.id, sender_id: message.sender.id, created_at: message.created_at}
